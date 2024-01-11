@@ -18,7 +18,7 @@ import { BrowserTracing } from '@sentry/tracing'
 import { useFlags, withLDProvider } from 'launchdarkly-react-client-sdk'
 import env from '../env'
 import '../styles.css'
-import { withAuthenticationRequired } from '@auth0/auth0-react'
+//import { withAuthenticationRequired } from '@auth0/auth0-react'
 import ModalManager from '../components/ModalManager'
 import Maintenance from '../components/Maintenance'
 import Meta from '../components/Meta'
@@ -36,7 +36,7 @@ Sentry.init({
 })
 
 // Providers and components only relevant to a logged-in user
-const WithAuth = withAuthenticationRequired(function ({ children }: PropsWithChildren) {
+const WithAuth = function ({ children }: PropsWithChildren) {
     return (
         <ModalManager>
             <UserAccountContextProvider>
@@ -49,7 +49,7 @@ const WithAuth = withAuthenticationRequired(function ({ children }: PropsWithChi
             </UserAccountContextProvider>
         </ModalManager>
     )
-})
+}
 
 function App({
     Component: Page,
