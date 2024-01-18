@@ -66,6 +66,7 @@ export interface IMarketDataService {
 
 export class PolygonMarketDataService implements IMarketDataService {
     private readonly api: IRestClient
+    private isFreeTier: boolean
 
     readonly source = 'polygon'
 
@@ -75,6 +76,7 @@ export class PolygonMarketDataService implements IMarketDataService {
         private readonly cache: CacheService
     ) {
         this.api = restClient(apiKey)
+        this.isFreeTier = !process.env.POLYGON_API_KEY
     }
 
     async getDailyPricing<
@@ -285,12 +287,20 @@ export class PolygonMarketDataService implements IMarketDataService {
     }
 
     private async _snapshotStocks(tickers: string[]) {
+        // Noop if we're on the free tier
+        if (this.isFreeTier) {
+            return
+        }
         /**
          * https://polygon.io/docs/stocks/get_v2_snapshot_locale_us_markets_stocks_tickers
          */
         const res = await this.api.stocks.snapshotAllTickers({
             tickers: tickers.join(','),
         })
+
+        if (res.status === 'NOT_AUTHORIZED') {
+            this.isFreeTier = true
+        }
 
         const snapshots = res.tickers ?? []
 
@@ -346,6 +356,11 @@ export class PolygonMarketDataService implements IMarketDataService {
     }
 
     private async _snapshotOption(ticker: string) {
+        // Noop if we're on the free tier
+        if (this.isFreeTier) {
+            return
+        }
+
         // https://polygon.io/docs/options/get_v3_reference_options_contracts__options_ticker
         const underlyingTicker =
             MarketUtil.getUnderlyingTicker(ticker) ??
@@ -356,10 +371,14 @@ export class PolygonMarketDataService implements IMarketDataService {
 
         if (!underlyingTicker) return null
 
-        const { results: snapshot } = await this.api.options.snapshotOptionContract(
+        const { results: snapshot, status } = await this.api.options.snapshotOptionContract(
             underlyingTicker,
             ticker
         )
+
+        if (status === 'NOT_AUTHORIZED') {
+            this.isFreeTier
+        }
 
         return {
             ticker,
@@ -382,12 +401,21 @@ export class PolygonMarketDataService implements IMarketDataService {
     }
 
     private async _snapshotCrypto(tickers: string[]) {
+        // Noop if we're on the free tier
+        if (this.isFreeTier) {
+            return
+        }
+
         /**
          * https://polygon.io/docs/crypto/get_v2_snapshot_locale_global_markets_crypto_tickers
          */
         const res = await this.api.crypto.snapshotAllTickers({
             tickers: tickers.join(','),
         })
+
+        if (res.status === 'NOT_AUTHORIZED') {
+            this.isFreeTier = true
+        }
 
         const snapshots = res.tickers ?? []
 
