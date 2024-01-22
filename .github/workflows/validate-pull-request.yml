@@ -12,30 +12,30 @@ jobs:
         name: Build and Test
         runs-on: ubuntu-latest
         env: # Set up in GitHub prior to running
-            NX_DATABASE_URL={{ secrets.NX_DATABASE_URL }}
-            NX_DATABASE_SECRET=${{ secrets.NX_DATABASE_SECRET }}
-            NX_SESSION_SECRET=${{ secrets.NX_SESSION_SECRET }}
-            NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET }}
-            NEXTAUTH_URL=http://localhost:4200
-            NX_NEXTAUTH_URL=http://localhost:4200
-            NX_PLAID_CLIENT_ID=${{ secrets.NX_PLAID_CLIENT_ID }}
-            NX_PLAID_SECRET=${{ secrets.NX_PLAID_SECRET }}
-            NX_PLAID_ENV=sandbox
-            NX_TELLER_SIGNING_SECRET=${{ secrets.NX_TELLER_SIGNING_SECRET }}
-            NEXT_PUBLIC_TELLER_APP_ID=${{ secrets.NEXT_PUBLIC_TELLER_APP_ID }}
-            NEXT_PUBLIC_TELLER_ENV=sandbox
-            NX_TELLER_ENV=sandbox
-            NX_EMAIL_PROVIDER=postmark
-            NX_EMAIL_FROM_ADDRESS=account@maybe.co
-            NX_EMAIL_REPLY_TO_ADDRESS=support@maybe.co
-            NX_EMAIL_PROVIDER_API_TOKEN=
-            NX_POLYGON_API_KEY=${{ secrets.NX_POLYGON_API_KEY }}
-            NX_POLYGON_TIER=${{ secrets.NX_POLYGON_TIER }}
-            NX_CORS_ORIGINS=http://localhost:4200
-            NX_API_URL=http://localhost:3333
-            NEXT_PUBLIC_API_URL=http://localhost:3333
-            NX_CLIENT_URL=http://localhost:4200
-            NX_REDIS_URL=redis://localhost:6379
+            NX_DATABASE_URL: ${{ secrets.NX_DATABASE_URL }}
+            NX_DATABASE_SECRET: ${{ secrets.NX_DATABASE_SECRET }}
+            NX_SESSION_SECRET: ${{ secrets.NX_SESSION_SECRET }}
+            NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
+            NEXTAUTH_URL: http://localhost:4200
+            NX_NEXTAUTH_URL: http://localhost:4200
+            NX_PLAID_CLIENT_ID: ${{ secrets.NX_PLAID_CLIENT_ID }}
+            NX_PLAID_SECRET: ${{ secrets.NX_PLAID_SECRET }}
+            NX_PLAID_ENV: sandbox
+            NX_TELLER_SIGNING_SECRET: ${{ secrets.NX_TELLER_SIGNING_SECRET }}
+            NEXT_PUBLIC_TELLER_APP_ID: ${{ secrets.NEXT_PUBLIC_TELLER_APP_ID }}
+            NEXT_PUBLIC_TELLER_ENV: sandbox
+            NX_TELLER_ENV: sandbox
+            NX_EMAIL_PROVIDER: postmark
+            NX_EMAIL_FROM_ADDRESS: account@maybe.co
+            NX_EMAIL_REPLY_TO_ADDRESS: support@maybe.co
+            NX_EMAIL_PROVIDER_API_TOKEN:
+            NX_POLYGON_API_KEY: ${{ secrets.NX_POLYGON_API_KEY }}
+            NX_POLYGON_TIER: ${{ secrets.NX_POLYGON_TIER }}
+            NX_CORS_ORIGINS: http://localhost:4200
+            NX_API_URL: http://localhost:3333
+            NEXT_PUBLIC_API_URL: http://localhost:3333
+            NX_CLIENT_URL: http://localhost:4200
+            NX_REDIS_URL: redis://localhost:6379
         services:
             redis:
                 image: redis:6-alpine
