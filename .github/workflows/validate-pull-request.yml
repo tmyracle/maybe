@@ -81,7 +81,7 @@ jobs:
                   NX_EMAIL_PROVIDER=postmark
                   NX_EMAIL_FROM_ADDRESS=account@maybe.co
                   NX_EMAIL_REPLY_TO_ADDRESS=support@maybe.co
-                  NX_EMAIL_PROVIDER_API_TOKEN:
+                  NX_EMAIL_PROVIDER_API_TOKEN=
                   NX_POLYGON_API_KEY=${{ secrets.NX_POLYGON_API_KEY }}
                   NX_POLYGON_TIER=${{ secrets.NX_POLYGON_TIER }}
                   NX_CORS_ORIGINS=http://localhost:4200

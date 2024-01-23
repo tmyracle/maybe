@@ -260,8 +260,11 @@ function AccountsSidebarRow({
             active={active}
             data-testid="account-accordion-row"
             label={
-                <div className="flex items-center space-x-1">
-                    <div className="flex-1 min-w-0" data-testid="account-accordion-row-name">
+                <div
+                    className="flex items-center space-x-1"
+                    data-testid="account-accordion-row-name"
+                >
+                    <div className="flex-1 min-w-0">
                         <p className="text-base font-normal line-clamp-2">{label}</p>
 
                         {(institutionName || accountMask) && (
