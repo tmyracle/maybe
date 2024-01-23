@@ -10,6 +10,7 @@ jobs:
     # Builds affected apps and runs unit tests
     build_test:
         name: Build and Test
+        environment: Testing
         runs-on: ubuntu-latest
         env: # Set up in GitHub prior to running
             NX_DATABASE_URL: ${{ secrets.NX_DATABASE_URL }}
@@ -84,6 +85,9 @@ jobs:
 
             - name: Build affected apps
               run: yarn nx affected --target=build --parallel=5
+
+            - name: Print NX_DATABASE_URL
+              run: echo $NX_DATABASE_URL
 
             - name: Run local DB migration for testing
               run: yarn prisma:migrate:deploy
