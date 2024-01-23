@@ -104,7 +104,7 @@ jobs:
               run: |
                   sudo yarn cypress install
                   yarn wait-on -t 120000 http://localhost:4200
-                  sudo yarn dev:ci:e2e --env.WEBHOOK_TYPE 'mock'
+                  sudo yarn dev:ci:e2e --configuration=ci --env.WEBHOOK_TYPE 'mock'
             - name: Upload test artifacts
               if: failure()
               uses: actions/upload-artifact@v2
