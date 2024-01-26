@@ -257,6 +257,63 @@
             "tags": ["scope:app"],
             "implicitDependencies": ["client", "server", "workers"]
         },
+        "emails": {
+            "$schema": "../../node_modules/nx/schemas/project-schema.json",
+            "root": "libs/email",
+            "sourceRoot": "libs/email",
+            "projectType": "library",
+            "targets": {
+                "build": {
+                    "executor": "@nrwl/rollup:rollup",
+                    "outputs": ["{options.outputPath}"],
+                    "options": {
+                        "outputPath": "dist/libs/email",
+                        "tsConfig": "libs/email/tsconfig.lib.json",
+                        "project": "libs/email/package.json",
+                        "entryFile": "libs/email/index.ts",
+                        "external": ["react/jsx-runtime"],
+                        "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
+                        "assets": [
+                            {
+                                "glob": "libs/email/README.md",
+                                "input": ".",
+                                "output": "."
+                            }
+                        ]
+                    },
+                    "configurations": {
+                        "production": {
+                            "optimization": true,
+                            "extractLicenses": true,
+                            "inspect": false
+                        }
+                    }
+                },
+                "lint": {
+                    "executor": "@nrwl/linter:eslint",
+                    "outputs": ["{options.outputFile}"],
+                    "options": {
+                        "lintFilePatterns": ["libs/email/**/*.ts"]
+                    }
+                },
+                "test": {
+                    "executor": "@nrwl/jest:jest",
+                    "outputs": ["/coverage/libs/email"],
+                    "options": {
+                        "jestConfig": "libs/email/jest.config.ts",
+                        "passWithNoTests": true
+                    }
+                },
+                "dev": {
+                    "executor": "nx:run-commands",
+                    "options": {
+                        "cwd": "libs/email",
+                        "command": "yarn dev --port 4321"
+                    }
+                }
+            },
+            "tags": ["scope:shared"]
+        },
         "server": {
             "$schema": "../../node_modules/nx/schemas/project-schema.json",
             "root": "apps/server",
@@ -415,7 +472,7 @@
                     }
                 }
             },
-            "tags": ["scope:shared"]
+            "tags": ["scope:client-shared"]
         },
         "workers": {
             "$schema": "../../node_modules/nx/schemas/project-schema.json",

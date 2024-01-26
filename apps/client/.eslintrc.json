@@ -26,9 +26,5 @@
     "env": {
         "jest": true
     },
-    "settings": {
-        "next": {
-            "rootDir": "apps/advisor"
-        }
-    }
+    "settings": {}
 }

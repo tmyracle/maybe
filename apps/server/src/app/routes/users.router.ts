@@ -3,6 +3,8 @@ import { subject } from '@casl/ability'
 import { z } from 'zod'
 import { DateUtil, type SharedType } from '@maybe-finance/shared'
 import endpoint from '../lib/endpoint'
+import { render } from '@react-email/render'
+import { MaybeExampleEmail } from '@maybe-finance/emails'
 import env from '../../env'
 import {
     type OnboardingState,
@@ -269,6 +271,17 @@ router.post(
         resolve: async ({ input, ctx }) => {
             const authId = input.authId ?? ctx.user?.authId
             if (!authId) throw new Error('User not found')
+
+            if (!ctx.user?.email) throw new Error('User email not found')
+
+            const emailHtml = render(
+                MaybeExampleEmail({ name: ctx.user?.name, email: ctx.user?.email })
+            )
+            await ctx.emailService.send({
+                to: ctx.user?.email,
+                subject: 'Welcome to Maybe',
+                htmlBody: emailHtml,
+            })
 
             //await ctx.managementClient.sendEmailVerification({ user_id: authId })
 
