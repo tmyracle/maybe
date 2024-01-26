@@ -257,6 +257,52 @@
             "tags": ["scope:app"],
             "implicitDependencies": ["client", "server", "workers"]
         },
+        "email": {
+            "root": "libs/email",
+            "sourceRoot": "libs/email",
+            "projectType": "library",
+            "tags": [],
+            "targets": {
+                "lint": {
+                    "executor": "@nrwl/linter:eslint",
+                    "outputs": ["{options.outputFile}"],
+                    "options": {
+                        "lintFilePatterns": ["libs/email/**/*.{ts,tsx,js,jsx}"]
+                    }
+                },
+                "build": {
+                    "executor": "@nrwl/vite:build",
+                    "outputs": ["{options.outputPath}"],
+                    "defaultConfiguration": "production",
+                    "options": {
+                        "outputPath": "dist/libs/email"
+                    },
+                    "configurations": {
+                        "development": {
+                            "mode": "development"
+                        },
+                        "production": {
+                            "mode": "production"
+                        }
+                    }
+                },
+                "test": {
+                    "executor": "@nrwl/vite:test",
+                    "outputs": ["coverage/libs/email"],
+                    "options": {
+                        "passWithNoTests": true,
+                        "reportsDirectory": "../../coverage/libs/email"
+                    }
+                },
+                "dev": {
+                    "executor": "nx:run-commands",
+                    "options": {
+                        "cwd": "libs/email",
+                        "command": "pnpm dev --port 4321"
+                    }
+                }
+            }
+        },
         "server": {
             "$schema": "../../node_modules/nx/schemas/project-schema.json",
             "root": "apps/server",

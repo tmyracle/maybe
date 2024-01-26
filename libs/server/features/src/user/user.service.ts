@@ -189,7 +189,7 @@ export class UserService implements IUserService {
             ...(min_start_date ? [DateTime.fromJSDate(min_start_date, { zone: 'utc' })] : [])
         )
 
-        return minDate.toISODate()
+        return minDate.toISODate()!
     }
 
     async getSubscription(userId: User['id']): Promise<SharedType.UserSubscription> {
@@ -332,7 +332,7 @@ export class UserService implements IUserService {
             .setTitle((_) => "Before we start, let's verify your email")
             .addToGroup('setup')
             .completeIf((user) => user.emailVerified)
-            .excludeIf((user) => user.isAppleIdentity || true) // TODO: Needs email service to send, skip for now
+            .excludeIf((user) => user.isAppleIdentity) // TODO: Needs email service to send, skip for now
 
         onboarding
             .addStep('firstAccount')

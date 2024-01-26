@@ -166,10 +166,10 @@ export class AccountService implements IAccountService {
     async getTransactions(accountId: Account['id'], page = 0, start?: DateTime, end?: DateTime) {
         const [transactions, totalTransactions] = await this.prisma.$transaction([
             this.prisma.$queryRaw<SharedType.TransactionEnriched[]>`
-                SELECT 
+                SELECT
                     *
                 FROM transactions_enriched t
-                WHERE 
+                WHERE
                     t."accountId" = ${accountId}
                     AND (${start?.toISODate()}::date IS NULL OR t.date >= ${start?.toISODate()}::date)
                     AND (${end?.toISODate()}::date IS NULL OR t.date <= ${end?.toISODate()}::date)
@@ -427,7 +427,7 @@ export class AccountService implements IAccountService {
         })
 
         if (account?.startDate) {
-            return DateTime.fromJSDate(account.startDate, { zone: 'utc' }).toISODate()
+            return DateTime.fromJSDate(account.startDate, { zone: 'utc' }).toISODate()!
         }
 
         const {
@@ -438,7 +438,7 @@ export class AccountService implements IAccountService {
         })
 
         return minDate
-            ? DateTime.fromJSDate(minDate, { zone: 'utc' }).toISODate()
-            : DateTime.utc().minus({ years: 2 }).toISODate()
+            ? DateTime.fromJSDate(minDate, { zone: 'utc' }).toISODate()!
+            : DateTime.utc().minus({ years: 2 }).toISODate()!
     }
 }

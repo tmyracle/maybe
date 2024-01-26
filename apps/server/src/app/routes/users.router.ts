@@ -9,6 +9,8 @@ import {
     type RegisteredStep,
     UpdateOnboardingSchema,
 } from '@maybe-finance/server/features'
+import { MaybeExampleEmail } from '@maybe-finance/email'
+import { render } from '@react-email/render'
 
 const router = Router()
 
@@ -269,6 +271,18 @@ router.post(
         resolve: async ({ input, ctx }) => {
             const authId = input.authId ?? ctx.user?.authId
             if (!authId) throw new Error('User not found')
+
+            if (!ctx.user?.email) throw new Error('User email not found')
+
+            const emailHtml = render(
+                MaybeExampleEmail({ email: ctx.user.email, name: ctx.user.name })
+            )
+
+            await ctx.emailService.send({
+                to: ctx.user.email,
+                subject: 'Welcome to Maybe!',
+                htmlBody: emailHtml,
+            })
 
             //await ctx.managementClient.sendEmailVerification({ user_id: authId })
 

@@ -1,0 +1,24 @@
+{
+    "name": "@maybe-finance/email",
+    "version": "0.0.1",
+    "main": "./index.js",
+    "types": "./index.d.ts",
+    "workspaces": [
+        ".react-email"
+    ],
+    "scripts": {
+        "build": "email build",
+        "dev": "email dev",
+        "export": "email export"
+    },
+    "dependencies": {
+        "@react-email/components": "0.0.14",
+        "react-email": "2.0.0"
+    },
+    "exports": {
+        ".": {
+            "import": "./index.mjs",
+            "require": "./index.js"
+        }
+    }
+}
